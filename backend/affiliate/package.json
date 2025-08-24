@@ -1,0 +1,24 @@
+{
+  "name": "affiliate-system",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node index.js",
+    "prisma": "prisma",
+    "seed": "node prisma/seed.js",
+    "admin:codes:new": "node -e \"(async()=>{const{PrismaClient}=require('@prisma/client');const p=new PrismaClient();const code='AFF-'+Math.random().toString(36).slice(2,8).toUpperCase();const invite=await p.inviteCode.create({data:{code,maxUses:process.env.MAX_USES?parseInt(process.env.MAX_USES):1,label:process.env.LABEL||null,expiresAt:process.env.EXPIRES_AT?new Date(process.env.EXPIRES_AT):null}});console.log('Created invite code:',invite);await p.$disconnect();process.exit(0)})().catch(async e=>{console.error(e);process.exit(1)})\""
+  },
+  "dependencies": {
+    "@prisma/client": "^5.14.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "prisma": "^5.14.0"
+  }
+}
+
+

@@ -1,0 +1,43 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            Int        @id @default(autoincrement())
+  name          String
+  email         String     @unique
+  password_hash String
+  role          String     @default("affiliate")
+  created_at    DateTime   @default(now())
+  Affiliate     Affiliate?
+}
+
+model Affiliate {
+  id              Int       @id @default(autoincrement())
+  user_id         Int       @unique
+  affiliate_code  String    @unique
+  referral_link   String
+  commission_rate Float     @default(10.0)
+  total_earned    Float     @default(0.0)
+  status          String    @default("pending")
+  created_at      DateTime  @default(now())
+  User            User      @relation(fields: [user_id], references: [id])
+}
+
+model InviteCode {
+  id         Int       @id @default(autoincrement())
+  code       String    @unique
+  label      String?
+  maxUses    Int       @default(1)
+  usedCount  Int       @default(0)
+  expiresAt  DateTime?
+  active     Boolean   @default(true)
+  created_at DateTime  @default(now())
+}
+
+
