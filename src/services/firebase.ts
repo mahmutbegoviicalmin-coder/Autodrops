@@ -14,18 +14,36 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+let app;
+let auth;
+let db;
 
-// Initialize Firebase Auth
-export const auth = getAuth(app);
+try {
+  app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+} catch (error) {
+  console.warn('Firebase initialization failed:', error);
+  // Create mock auth object
+  auth = {
+    currentUser: null,
+    onAuthStateChanged: () => () => {},
+    signOut: () => Promise.resolve(),
+    signInWithEmailAndPassword: () => Promise.reject(new Error('Firebase not configured')),
+    createUserWithEmailAndPassword: () => Promise.reject(new Error('Firebase not configured'))
+  };
+}
 
-// Persist session across tabs and reloads
-void setPersistence(auth, browserLocalPersistence).catch((e) => {
-  console.warn('Failed to set Firebase auth persistence:', e);
-});
+export { auth };
 
 // Initialize Firestore
-export const db = getFirestore(app);
+try {
+  db = getFirestore(app);
+} catch (error) {
+  console.warn('Firestore initialization failed:', error);
+  db = null;
+}
+
+export { db };
 
 // Initialize Analytics (only in production)
 export const analytics = typeof window !== 'undefined' && !import.meta.env.DEV ? getAnalytics(app) : null;
