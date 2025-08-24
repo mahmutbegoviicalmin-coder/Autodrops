@@ -1,14 +1,16 @@
 import { Product } from '../types';
 
-export const mockProducts: Product[] = [
+export const mockProducts: any[] = [
   {
     id: '1',
     title: 'Oversized Vintage Wash Hoodie',
     price: 29.99,
     originalPrice: 59.99,
+    sellPrice: 18.99,
     rating: 4.8,
     reviewCount: 2847,
     deliveryTime: '7-14 days',
+    deliveryDays: 10,
     supplier: 'TrendWear Co.',
     supplierLocation: 'China',
     supplierUrl: 'https://cjdropshipping.com/product/oversized-hoodie-vintage',
@@ -18,8 +20,9 @@ export const mockProducts: Product[] = [
     competitionLevel: 'Medium',
     trendingScore: 94,
     stockAvailable: 1250,
+    monthlyOrders: 456,
     tags: ['Trending', 'High Margin', 'Social Media']
-  },
+  } as Product,
   {
     id: '2',
     title: 'Y2K Butterfly Print Crop Top',
