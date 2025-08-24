@@ -28,7 +28,7 @@ export interface SupplierInfo {
 }
 
 // Mock products for orders
-const mockProduct1: Product = {
+const mockProduct1: any = {
   id: '1',
   title: 'Y2K Butterfly Print Crop Top',
   price: 19.99,
@@ -47,7 +47,7 @@ const mockProduct1: Product = {
   tags: ['Y2K', 'Low Competition', 'Instagram Popular']
 };
 
-const mockProduct2: Product = {
+const mockProduct2: any = {
   id: '2',
   title: 'Minimalist Cargo Pants',
   price: 39.99,
@@ -66,7 +66,7 @@ const mockProduct2: Product = {
   tags: ['Streetwear', 'TikTok Viral']
 };
 
-const mockProduct3: Product = {
+const mockProduct3: any = {
   id: '3',
   title: 'Chunky Platform Sneakers',
   price: 49.99,
