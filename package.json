@@ -1,0 +1,50 @@
+{
+  "name": "autodrops",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Premium dropshipping products platform for clothing brands",
+  "scripts": {
+    "dev": "vite",
+    "dev:new": "vite --port 3002",
+    "proxy": "node server.cjs",
+    "dev:full": "concurrently \"npm run proxy\" \"npm run dev\"",
+    "dev:full:new": "concurrently \"npm run proxy\" \"npm run dev:new\"",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "proxy:cj": "node api-server.cjs",
+    "dev:full:cj": "concurrently \"npm run proxy:cj\" \"npm run dev\"",
+    "agent:winners": "node scripts/winning-agent.cjs"
+  },
+  "dependencies": {
+    "axios": "^1.11.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "esbuild": "^0.25.9",
+    "express": "^4.21.2",
+    "firebase": "^12.1.0",
+    "lucide-react": "^0.263.1",
+    "node-fetch": "^2.7.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.5.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitejs/plugin-react": "^4.0.3",
+    "autoprefixer": "^10.4.14",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "postcss": "^8.4.27",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5"
+  }
+}
