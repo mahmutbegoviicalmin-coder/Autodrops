@@ -375,11 +375,11 @@ export function Homepage({ onGetStarted, onViewProducts, onViewAffiliate, connec
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-5 mb-12 animate-fade-in delay-500">
             <button
               onClick={() => onOpenAuth?.('register')}
-              className="group bg-gradient-to-r from-purple-600 to-blue-600 text-white px-10 py-4 rounded-xl font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-300 flex items-center gap-3 text-lg transform hover:scale-105 shadow-lg hover:shadow-2xl shadow-purple-500/25 h-[56px]"
+              className="group bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 md:px-10 md:py-4 rounded-xl font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-300 flex items-center gap-2 md:gap-3 text-base md:text-lg transform hover:scale-105 shadow-lg hover:shadow-2xl shadow-purple-500/25 h-[52px] md:h-[56px]"
             >
-              <Zap className="w-5 h-5 animate-pulse" />
-              Start with AutoDrops Pro
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
+              <Zap className="w-4 h-4 md:w-5 md:h-5 animate-pulse" />
+              <span className="whitespace-nowrap">Start with AutoDrops Pro</span>
+              <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-2 transition-transform duration-300" />
             </button>
             {/* Members joined pill, side-by-side with CTA */}
             <div
@@ -673,10 +673,10 @@ export function Homepage({ onGetStarted, onViewProducts, onViewAffiliate, connec
               ))}
             </div>
             
-            <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center space-x-2 mx-auto">
-              <DiscordLogo size={18} color="#FFFFFF" />
-              <span>Join Discord Community</span>
-              <ArrowRight className="w-5 h-5" />
+            <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 md:px-8 md:py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center space-x-2 mx-auto text-sm md:text-base">
+              <DiscordLogo size={16} color="#FFFFFF" />
+              <span className="whitespace-nowrap">Join Discord Community</span>
+              <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
             </button>
           </div>
         </div>
