@@ -29,6 +29,10 @@ import {
 } from 'lucide-react';
 import { GlobalSalesPulse } from './GlobalSalesPulse';
 import Logo from '../assets/logos/AD_logo.png';
+import GoogleLogoImg from '../assets/logos/Google_Logo_1.png';
+import ShopifyLogoImg from '../assets/logos/Shopify.com_Logo_1.png';
+import WooCommerceLogoImg from '../assets/logos/WooCommerce_Logo_1.png';
+import AliExpressLogoImg from '../assets/logos/AliExpress_ideTm3bGFv_1.png';
 
 // Particle Component
 const FloatingParticle = ({ icon, delay, duration, size = 40, startX, startY }: {
@@ -578,10 +582,10 @@ export function Homepage({ onGetStarted, onViewProducts, onViewAffiliate, connec
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 items-center justify-items-center">
           {[
-            '/src/assets/logos/Google_Logo_1.png',
-            '/src/assets/logos/Shopify.com_Logo_1.png',
-            '/src/assets/logos/WooCommerce_Logo_1.png',
-            '/src/assets/logos/AliExpress_ideTm3bGFv_1.png',
+            GoogleLogoImg,
+            ShopifyLogoImg,
+            WooCommerceLogoImg,
+            AliExpressLogoImg,
           ].map((src, i) => (
             <div key={src} className="logo-strip-item" style={{ animationDelay: `${i * 150}ms` }}>
               <img src={src} alt={`logo-${i}`} className="h-8 w-auto" />
