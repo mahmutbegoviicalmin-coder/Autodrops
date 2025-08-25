@@ -72,9 +72,11 @@ export const mockProducts: Product[] = [
     title: 'Chunky Platform Sneakers',
     price: 49.99,
     originalPrice: 99.99,
+    sellPrice: 22.5,
     rating: 4.9,
     reviewCount: 4251,
     deliveryTime: '8-15 days',
+    deliveryDays: 12,
     supplier: 'SoleStyle',
     supplierLocation: 'Vietnam',
     category: 'Shoes',
@@ -83,6 +85,7 @@ export const mockProducts: Product[] = [
     competitionLevel: 'Medium',
     trendingScore: 92,
     stockAvailable: 445,
+    monthlyOrders: 1400,
     tags: ['Shoes', 'High Rating', 'Fast Shipping']
   },
   {
@@ -90,9 +93,11 @@ export const mockProducts: Product[] = [
     title: 'Cottagecore Floral Dress',
     price: 34.99,
     originalPrice: 69.99,
+    sellPrice: 14.2,
     rating: 4.5,
     reviewCount: 1567,
     deliveryTime: '12-20 days',
+    deliveryDays: 16,
     supplier: 'VintageVibe',
     supplierLocation: 'India',
     category: 'Dresses',
@@ -101,6 +106,7 @@ export const mockProducts: Product[] = [
     competitionLevel: 'Low',
     trendingScore: 85,
     stockAvailable: 320,
+    monthlyOrders: 520,
     tags: ['Cottagecore', 'Aesthetic', 'Pinterest Popular']
   },
   {
@@ -108,9 +114,11 @@ export const mockProducts: Product[] = [
     title: 'Tech Wear Utility Vest',
     price: 44.99,
     originalPrice: 89.99,
+    sellPrice: 18.9,
     rating: 4.4,
     reviewCount: 892,
     deliveryTime: '6-14 days',
+    deliveryDays: 9,
     supplier: 'FutureWear',
     supplierLocation: 'South Korea',
     category: 'Outerwear',
@@ -119,6 +127,7 @@ export const mockProducts: Product[] = [
     competitionLevel: 'High',
     trendingScore: 91,
     stockAvailable: 180,
+    monthlyOrders: 300,
     tags: ['Techwear', 'Utility', 'Urban']
   }
 ];

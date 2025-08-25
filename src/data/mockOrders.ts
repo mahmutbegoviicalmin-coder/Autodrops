@@ -33,9 +33,11 @@ const mockProduct1: Product = {
   title: 'Y2K Butterfly Print Crop Top',
   price: 19.99,
   originalPrice: 39.99,
+  sellPrice: 6.2,
   rating: 4.6,
   reviewCount: 1923,
   deliveryTime: '5-12 days',
+  deliveryDays: 8,
   supplier: 'RetroStyle Ltd',
   supplierLocation: 'China',
   category: 'Tops',
@@ -44,7 +46,8 @@ const mockProduct1: Product = {
   competitionLevel: 'Low',
   trendingScore: 89,
   stockAvailable: 890,
-  tags: ['Y2K', 'Low Competition', 'Instagram Popular']
+  tags: ['Y2K', 'Low Competition', 'Instagram Popular'],
+  monthlyOrders: 950
 };
 
 const mockProduct2: Product = {
@@ -52,9 +55,11 @@ const mockProduct2: Product = {
   title: 'Minimalist Cargo Pants',
   price: 39.99,
   originalPrice: 79.99,
+  sellPrice: 16.8,
   rating: 4.7,
   reviewCount: 3156,
   deliveryTime: '10-18 days',
+  deliveryDays: 14,
   supplier: 'UrbanFlow',
   supplierLocation: 'Turkey',
   category: 'Pants',
@@ -63,7 +68,8 @@ const mockProduct2: Product = {
   competitionLevel: 'High',
   trendingScore: 87,
   stockAvailable: 670,
-  tags: ['Streetwear', 'TikTok Viral']
+  tags: ['Streetwear', 'TikTok Viral'],
+  monthlyOrders: 1800
 };
 
 const mockProduct3: Product = {
@@ -71,9 +77,11 @@ const mockProduct3: Product = {
   title: 'Chunky Platform Sneakers',
   price: 49.99,
   originalPrice: 99.99,
+  sellPrice: 21.5,
   rating: 4.9,
   reviewCount: 4251,
   deliveryTime: '8-15 days',
+  deliveryDays: 12,
   supplier: 'SoleStyle',
   supplierLocation: 'Vietnam',
   category: 'Shoes',
@@ -82,7 +90,8 @@ const mockProduct3: Product = {
   competitionLevel: 'Medium',
   trendingScore: 92,
   stockAvailable: 445,
-  tags: ['Shoes', 'High Rating', 'Fast Shipping']
+  tags: ['Shoes', 'High Rating', 'Fast Shipping'],
+  monthlyOrders: 1400
 };
 
 export const mockOrders: Order[] = [
