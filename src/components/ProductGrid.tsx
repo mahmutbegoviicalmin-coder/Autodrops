@@ -176,7 +176,7 @@ export function ProductGrid({ products, onProductImport, onProductAnalyze, onPro
           
           <div className="flex items-center justify-center space-x-2 text-gray-400">
             <Loader2 className="h-5 w-5 animate-spin" />
-                            <span>Fetching live CJDropshipping data...</span>
+            <span>Fetching live product data...</span>
           </div>
         </div>
       </div>
@@ -233,7 +233,7 @@ export function ProductGrid({ products, onProductImport, onProductAnalyze, onPro
           </div>
           
           <span className="text-gray-400">
-                            {products.length} products from CJDropshipping
+            {products.length} products loaded
           </span>
         </div>
       </div>

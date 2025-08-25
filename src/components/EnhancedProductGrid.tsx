@@ -6,7 +6,6 @@ import {
 import { Product } from '../types';
 import { getCategoryIconByName } from '../data/categoryIcons';
 import { useEffect, useState } from 'react';
-import { CJDropshippingApiService } from '../services/cjdropshippingApi';
 
 const ENABLE_SERPAPI = false;
 
@@ -44,13 +43,7 @@ function EnhancedProductCard({ product, onAnalyze, onImport, onFavorite, isFavor
       setAvgMarket(Number(cached));
       return;
     }
-    (async () => {
-      const price = await (CJDropshippingApiService as any).getAvgMarketPrice?.(product.title);
-      if (mounted && typeof price === 'number' && isFinite(price) && price > 0) {
-        setAvgMarket(price);
-        try { sessionStorage.setItem(key, String(price)); } catch {}
-      }
-    })();
+    // Disabled external market price enrichment (CJ dependency removed)
     return () => { mounted = false; };
   }, [product.id, product.title, index]);
 
@@ -72,7 +65,7 @@ function EnhancedProductCard({ product, onAnalyze, onImport, onFavorite, isFavor
     return 'text-gray-400';
   };
 
-  const isWinningProduct = (product.monthlyOrders ?? 0) >= 100; // Lowered from 3000 to 100
+  const isWinningProduct = (product.monthlyOrders ?? 0) >= 100;
   const inRangeOrders = (product.monthlyOrders ?? 0) >= 3000;
   const is3000Plus = (product.monthlyOrders ?? 0) >= 3000;
   const isTrending = product.trendingScore >= 70;
@@ -233,11 +226,11 @@ function EnhancedProductCard({ product, onAnalyze, onImport, onFavorite, isFavor
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <div className="space-y-1">
-              {/* CJ cost on top (REAL) */}
+              {/* Cost on top (estimated) */}
               <div className="text-xs text-gray-400">
                 <span className="inline-flex items-center gap-1">
                   <DollarSign className="w-3 h-3 text-gray-500" />
-                  CJ cost: <span className="text-gray-300 font-semibold">${(product.costPrice || product.sellPrice || 0).toFixed(2)}</span>
+                  Cost: <span className="text-gray-300 font-semibold">${(product.costPrice || product.sellPrice || 0).toFixed(2)}</span>
                 </span>
               </div>
               {/* AI Recommended Price (primary) */}

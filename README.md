@@ -134,3 +134,7 @@ This project is licensed under the MIT License.
 ## Support
 
 For support or questions, please open an issue in the repository. 
+
+## Docs
+
+Generated application request materials (e.g., AliExpress API request) will be placed under the `docs/` directory when created. 

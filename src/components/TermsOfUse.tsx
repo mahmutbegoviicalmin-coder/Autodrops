@@ -9,12 +9,12 @@ export function TermsOfUse() {
       </div>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-10">
         <div className="bg-gray-900/60 border border-gray-700/60 rounded-2xl p-6 lg:p-10 card-gradient relative overflow-hidden">
-          <div className="absolute right-4 top-4">
+          <div className="absolute right-4 top-2 md:top-4">
             <span className="text-xs uppercase tracking-wider px-3 py-1 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-purple-500/25 animate-pulse">
               Last Updated: August 2025
             </span>
           </div>
-          <h1 className="text-3xl lg:text-4xl font-bold text-white mb-3 text-center">
+          <h1 className="text-3xl lg:text-4xl font-bold text-white mb-3 text-center mt-10 md:mt-0">
             Terms of Use for AutoDrops
           </h1>
           
@@ -50,7 +50,13 @@ export function TermsOfUse() {
               <li>Fees are non-refundable except where required by law.</li>
             </ul>
 
-            <h2 className="text-xl font-semibold mt-8 mb-4">5. Acceptable Use</h2>
+            <h2 className="text-xl font-semibold mt-8 mb-4">5. Refund & Cancellation Policy</h2>
+            <p className="mb-4"><strong>Money-Back Guarantee.</strong> If you subscribe to a paid plan and AutoDrops does not meet your expectations, you may request a full refund within 30 days of your initial purchase. This 30‑day guarantee applies only to your most recent payment.</p>
+            <p className="mb-4"><strong>Refund Timing.</strong> Refunds are typically issued within 24–48 hours after approval. Depending on your card provider, it can take 5–10 business days for funds to appear on your statement.</p>
+            <p className="mb-4"><strong>Cancellation.</strong> You can cancel anytime from your account settings or by contacting support. After cancellation, you’ll keep access until the end of your current billing period unless a refund is granted.</p>
+            <p className="mb-6"><strong>Payment Declines.</strong> If a payment fails (e.g., insufficient funds, expired card), your access may be suspended until a successful charge occurs. AutoDrops is not responsible for any fees your bank may charge due to declines.</p>
+
+            <h2 className="text-xl font-semibold mt-8 mb-4">6. Acceptable Use</h2>
             <p className="mb-4">You agree not to:</p>
             <ul className="list-disc pl-6 mb-6 space-y-2">
               <li>Use AutoDrops for unlawful, harmful, or fraudulent activities.</li>
@@ -59,21 +65,21 @@ export function TermsOfUse() {
               <li>Interfere with the security or integrity of our Services.</li>
             </ul>
 
-            <h2 className="text-xl font-semibold mt-8 mb-4">6. Intellectual Property</h2>
+            <h2 className="text-xl font-semibold mt-8 mb-4">7. Intellectual Property</h2>
             <ul className="list-disc pl-6 mb-6 space-y-2">
               <li>All content, code, and technology on AutoDrops are owned by us or our licensors.</li>
               <li>You are granted a limited, non-exclusive, non-transferable license to use the Services for your personal or business use in connection with your online store.</li>
               <li>You may not copy, reverse engineer, or exploit the Services beyond what is expressly permitted.</li>
             </ul>
 
-            <h2 className="text-xl font-semibold mt-8 mb-4">7. Third-Party Services</h2>
+            <h2 className="text-xl font-semibold mt-8 mb-4">8. Third-Party Services</h2>
             <ul className="list-disc pl-6 mb-6 space-y-2">
               <li>AutoDrops integrates with third-party platforms (e.g., CJ Dropshipping, Shopify, WooCommerce).</li>
               <li>We are not responsible for third-party services or their terms of use.</li>
               <li>Your use of third-party services is governed by their respective policies.</li>
             </ul>
 
-            <h2 className="text-xl font-semibold mt-8 mb-4">8. Termination</h2>
+            <h2 className="text-xl font-semibold mt-8 mb-4">9. Termination</h2>
             <p className="mb-4">We may suspend or terminate your access to AutoDrops at any time if you:</p>
             <ul className="list-disc pl-6 mb-6 space-y-2">
               <li>Violate these Terms,</li>
@@ -84,34 +90,34 @@ export function TermsOfUse() {
               You may cancel your subscription at any time through your account settings.
             </p>
 
-            <h2 className="text-xl font-semibold mt-8 mb-4">9. Disclaimer of Warranties</h2>
+            <h2 className="text-xl font-semibold mt-8 mb-4">10. Disclaimer of Warranties</h2>
             <p className="mb-6">
               AutoDrops is provided "as is" and "as available." We do not guarantee uninterrupted or error-free service. To the maximum extent permitted by law, we disclaim all warranties, express or implied.
             </p>
 
-            <h2 className="text-xl font-semibold mt-8 mb-4">10. Limitation of Liability</h2>
+            <h2 className="text-xl font-semibold mt-8 mb-4">11. Limitation of Liability</h2>
             <p className="mb-4">To the fullest extent permitted by law:</p>
             <ul className="list-disc pl-6 mb-6 space-y-2">
               <li>AutoDrops shall not be liable for any indirect, incidental, or consequential damages.</li>
               <li>Our total liability for any claim shall not exceed the amount you paid for the Services in the 3 months prior to the claim.</li>
             </ul>
 
-            <h2 className="text-xl font-semibold mt-8 mb-4">11. Indemnification</h2>
+            <h2 className="text-xl font-semibold mt-8 mb-4">12. Indemnification</h2>
             <p className="mb-6">
               You agree to indemnify and hold harmless AutoDrops, its affiliates, and employees from any claims, damages, or expenses arising out of your use of the Services or violation of these Terms.
             </p>
 
-            <h2 className="text-xl font-semibold mt-8 mb-4">12. Changes to Terms</h2>
+            <h2 className="text-xl font-semibold mt-8 mb-4">13. Changes to Terms</h2>
             <p className="mb-6">
               We may update these Terms from time to time. Updates will be posted on autodrops.io/legal/tos with the "Last Updated" date. Your continued use of AutoDrops after changes take effect constitutes acceptance of the updated Terms.
             </p>
 
-            <h2 className="text-xl font-semibold mt-8 mb-4">13. Governing Law</h2>
+            <h2 className="text-xl font-semibold mt-8 mb-4">14. Governing Law</h2>
             <p className="mb-6">
               These Terms shall be governed by and construed under the laws of United States, State of Delaware.
             </p>
 
-            <h2 className="text-xl font-semibold mt-8 mb-4">14. Contact</h2>
+            <h2 className="text-xl font-semibold mt-8 mb-4">15. Contact</h2>
             <p className="mb-6">
               If you have questions about these Terms, please contact us at:
             </p>

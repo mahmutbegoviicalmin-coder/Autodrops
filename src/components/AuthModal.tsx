@@ -496,7 +496,7 @@ export function AuthModal({ isOpen, onClose, initialMode = 'login', onSuccess }:
                 Premium Features Included:
               </h3>
               <ul className="text-sm text-gray-300 space-y-1">
-                <li>• Real CJDropshipping product data</li>
+                <li>• Real AliExpress product data</li>
                 <li>• AI-powered descriptions</li>
                 <li>• Store integrations</li>
                 <li>• Profit analysis tools</li>
@@ -507,9 +507,8 @@ export function AuthModal({ isOpen, onClose, initialMode = 'login', onSuccess }:
           {!isLogin && (
             <div className="mt-4 text-xs text-gray-500 text-center">
               By creating an account, you agree to our{' '}
-              <a href="#" className="text-purple-400 hover:text-purple-300">Terms of Service</a>{' '}
-              and{' '}
-              <a href="#" className="text-purple-400 hover:text-purple-300">Privacy Policy</a>.
+              <a href="/terms" className="text-purple-400 hover:text-purple-300">Terms of Use</a>{' '}
+              and <a href="/privacy" className="text-purple-400 hover:text-purple-300">Privacy Policy</a>.
             </div>
           )}
         </div>

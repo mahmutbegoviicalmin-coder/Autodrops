@@ -15,6 +15,7 @@ import { AffiliatePage } from './components/AffiliatePage';
 import { AffiliateApplyModal } from './components/AffiliateApplyModal';
 import { TermsOfUse } from './components/TermsOfUse';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
+import RefundPolicy from './components/RefundPolicy';
 import { StoreConnectionModal } from './components/StoreConnectionModal';
 import { ProductImportModal } from './components/ProductImportModal';
 import { ProductAnalysisModal } from './components/ProductAnalysisModal';
@@ -27,12 +28,12 @@ import { storeManager } from './services/storeManager';
 import { aiProductEnhancer } from './services/aiProductEnhancer';
 import { localTitleEnhancer } from './services/titleEnhancer';
 
-import { searchCJProducts, CJDropshippingApiService } from './services/cjdropshippingApi';
+// CJ integration removed
 import { Product } from './types';
 import { mockOrders } from './data/mockOrders';
 import { mockProducts } from './data/mockProducts';
 import { NewFilterSidebar, NewFilterSidebarState } from './components/NewFilterSidebar';
-import { getCJCategories } from './services/cjdropshippingApi';
+// CJ integration removed
 import Logo from './assets/logos/AD_logo.png';
 
 function AppContent() {
@@ -135,7 +136,7 @@ function AppContent() {
     }
   };
 
-  // Lightweight enrichment: fetch only rating and real min variant price (cached), to avoid value drift
+  // Lightweight enrichment placeholder (external enrichment disabled)
   const enrichRatingsAndPrices = (sourceProducts: Product[]) => {
     (async () => {
       try {
@@ -148,17 +149,14 @@ function AppContent() {
           if (idx === -1) continue;
 
           // Cache keys
-          const ratingKey = `cj_rating_${p.id}`;
-          const priceKey = `cj_min_price_${p.id}`;
+          const ratingKey = `rating_${p.id}`;
+          const priceKey = `min_price_${p.id}`;
 
           // Rating
           let nextRating: number | null = null;
           const cachedRating = sessionStorage.getItem(ratingKey);
           if (cachedRating !== null) {
             nextRating = Number(cachedRating);
-          } else {
-            nextRating = await CJDropshippingApiService.enrichRating(p.id);
-            if (nextRating !== null) sessionStorage.setItem(ratingKey, String(Number(nextRating.toFixed(1))));
           }
 
           // Real min price
@@ -166,9 +164,6 @@ function AppContent() {
           const cachedPrice = sessionStorage.getItem(priceKey);
           if (cachedPrice !== null) {
             nextMinPrice = Number(cachedPrice);
-          } else {
-            nextMinPrice = await CJDropshippingApiService.enrichMinVariantPrice(p.id);
-            if (nextMinPrice !== null) sessionStorage.setItem(priceKey, String(Number(nextMinPrice.toFixed(2))));
           }
 
           // Apply updates (ne diramo next.price da AI cijena ostane stabilna)
@@ -196,41 +191,20 @@ function AppContent() {
     })();
   };
 
-  // Test API connection on app load and clear cache (bez direktnog učitavanja da izbjegnemo dupli fetch)
+  // Initial cache clearing
   useEffect(() => {
-    console.log('🚀 App loaded - clearing cache and testing CJDropshipping API...');
+    console.log('🚀 App loaded - clearing cache...');
     
-    // Load CJ Categories on app start
-    const loadCategories = async () => {
-      try {
-        console.log('📂 Loading CJ categories...');
-        const cjCategories = await getCJCategories();
-        setCategories(cjCategories);
-        console.log(`✅ Loaded ${cjCategories.length} CJ categories`);
-      } catch (error) {
-        console.error('❌ Failed to load CJ categories:', error);
-        // Keep empty array as fallback
-      }
-    };
-    
-    loadCategories();
+    // Categories can be populated later from AliExpress integration
     
     try {
-      localStorage.removeItem('cj_product_search');
-      localStorage.removeItem('cj_trending_products');
+      // Remove any legacy keys
       sessionStorage.clear();
       console.log('🧹 Cleared frontend cache');
     } catch (e) {
       console.log('⚠️ Could not clear cache:', e);
     }
-    // Test CJDropshipping API connection after 24h reset
-    CJDropshippingApiService.testApiConnection()
-      .then((result: boolean) => {
-        console.log('✅ API test result (after 24h):', result);
-      })
-      .catch((error: any) => {
-        console.error('❌ API test failed:', error);
-      });
+    // API test removed (CJ integration removed)
   }, []);
 
   // Tiny client-side routing for public pages
@@ -310,72 +284,72 @@ function AppContent() {
   }, []);
 
   const loadInitialData = async () => {
-    // DIREKTNO koristi backend endpoint - jednostavno i stabilno
-    console.log('🎯 Loading products directly from backend /api/winning-products...');
+    console.log('🎯 Loading products from AliExpress search proxy...');
     try {
-      const resp = await fetch('http://localhost:3001/api/winning-products');
+      const resp = await fetch('http://localhost:3001/api/aliexpress/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ searchText: 'gadgets home office pet fitness', page: 1 })
+      });
       const data = await resp.json();
-      const arr = Array.isArray(data?.products) ? data.products : [];
-      console.log(`📦 Backend returned ${arr.length} products`);
-      
-      const mapped = arr.map((p: any) => ({
-        id: String(p.product_url || p.product_name || Math.random()),
-        title: String(p.product_name || 'Unknown Product'),
-        price: Number(p.price || 0),
-        originalPrice: Number(p.original_price || 0),
-        sellPrice: Number((Number(p.price || 0) / 2.5) || 0),
-        rating: Number(p.rating || 0),
-        reviewCount: 0,
-        deliveryTime: '5-10 days',
-        deliveryDays: 7,
-        supplier: 'CJ',
-        supplierLocation: 'CN',
-        category: 'General',
-        imageUrl: String(p.image_url || ''),
-        profitMargin: 60,
-        competitionLevel: 'Medium' as const,
-        trendingScore: 85,
-        stockAvailable: 100,
-        tags: [],
-        monthlyOrders: Number(p.order_count || 0),
-      }));
-      
+      const items = Array.isArray(data?.data?.items) ? data.data.items : [];
+      console.log(`📦 AliExpress returned ${items.length} items`);
+
+      const mapped = items.map((it: any, idx: number) => {
+        const title = String(it.title || it.product_title || it.subject || 'Unknown Product');
+        const image = String(it.image || it.product_main_image_url || it.thumb_url || '');
+        const price = Number(it.target_sale_price || it.sale_price || it.price || 0);
+        const original = Number(it.original_price || it.sale_price_max || price * 1.15 || 0);
+        const orders = Number(it.orders || it.app_sale_volume || 0);
+        const rating = Number(it.evaluate_rate || it.ratings || 0);
+        const url = String(it.product_url || it.detail_url || '');
+        const id = url || `${title}-${idx}`;
+        const costPrice = Number((price * 0.45).toFixed(2));
+        const profitAmount = Number((price - costPrice).toFixed(2));
+        const profitMargin = price > 0 ? Math.round((profitAmount / price) * 100) : 0;
+        return {
+          id,
+          title,
+          price: Number(price.toFixed?.(2) ?? price),
+          originalPrice: Number(original.toFixed?.(2) ?? original),
+          sellPrice: costPrice,
+          rating: isFinite(rating) ? rating : 0,
+          reviewCount: 0,
+          deliveryTime: '7-15 days',
+          deliveryDays: 10,
+          supplier: 'AliExpress',
+          supplierLocation: 'CN',
+          category: 'General',
+          imageUrl: image,
+          profitMargin,
+          competitionLevel: 'Medium' as const,
+          trendingScore: Math.min(100, Math.round(Math.min(1, (orders || 0) / 1000) * 70 + Math.min(1, (rating || 0) / 5) * 30)),
+          stockAvailable: 100,
+          tags: [],
+          monthlyOrders: orders,
+          costPrice,
+          profitAmount,
+        } as Product;
+      });
+
       if (mapped.length > 0) {
-        console.log(`✅ Loaded ${mapped.length} winning products from backend`);
+        console.log(`✅ Loaded ${mapped.length} products from AliExpress`);
         setAllProducts(mapped);
         setFilteredProducts(mapped);
         computeWinningSelection(mapped);
         return;
       }
-      
-      console.log('⚠️ No products from backend - using mock products');
-      // FALLBACK TO MOCKS
-      const mocks = mockProducts.map(p => ({
-        ...p,
-        deliveryDays: 7,
-        monthlyOrders: p.reviewCount ?? 800,
-        costPrice: Number(((p.price || 0) * 0.45).toFixed(2)),
-        profitAmount: Number(((p.price || 0) * 0.55).toFixed(2)),
-        profitMargin: Math.round(((p.price - ((p.price || 0) * 0.45)) / (p.price || 1)) * 100)
-      } as Product));
-      setAllProducts(mocks);
-      setFilteredProducts(mocks);
-      computeWinningSelection(mocks);
+
+      console.warn('⚠️ No products from AliExpress');
+      setAllProducts([]);
+      setFilteredProducts([]);
+      computeWinningSelection([]);
       return;
     } catch (e) {
-      console.error('❌ Backend fetch failed:', e);
-      console.log('🔄 Backend not available - using mock products');
-      const mocks = mockProducts.map(p => ({
-        ...p,
-        deliveryDays: 7,
-        monthlyOrders: p.reviewCount ?? 800,
-        costPrice: Number(((p.price || 0) * 0.45).toFixed(2)),
-        profitAmount: Number(((p.price || 0) * 0.55).toFixed(2)),
-        profitMargin: Math.round(((p.price - ((p.price || 0) * 0.45)) / (p.price || 1)) * 100)
-      } as Product));
-      setAllProducts(mocks);
-      setFilteredProducts(mocks);
-      computeWinningSelection(mocks);
+      console.error('❌ AliExpress fetch failed:', e);
+      setAllProducts([]);
+      setFilteredProducts([]);
+      computeWinningSelection([]);
       return;
     }
   };
@@ -383,82 +357,62 @@ function AppContent() {
   const loadRealProducts = async (searchText: string = 'home office storage print pet leashes home electronic accessories pet toys fitness') => {
     setIsLoadingProducts(true);
     try {
-      console.log(`🔍 Loading high-order products (≥100 monthly orders)...`);
-      
-      // NO CATEGORY FILTERING to avoid rate limits - filter on frontend
-      // const selectedCategory = sidebarFilters.categoryName === '🔥 All Categories' ? '' : sidebarFilters.categoryName;
-      
-      // First try to get high-order products directly (NO CATEGORY PARAMETER)
-      let products = await (CJDropshippingApiService as any).searchHighOrderProducts?.(120, '');
-      
-      if (!Array.isArray(products) || products.length < 12) {
-        console.log(`🔄 Fallback to regular search with filtering...`);
-        const searchResults = await searchCJProducts({ searchText, page: 1, pageSize: 200 });
-        products = searchResults.filter(p => (p.monthlyOrders ?? 0) >= 100);
-        console.log(`📦 Filtered to ${products.length} products with ≥100 orders`);
-      } else {
-        console.log(`✅ Got ${products.length} high-order products directly`);
-      }
-      
-      console.log('🔍 First high-order product sample:', products[0]);
-      
-      if (products.length > 0) {
-        // Apply monthly orders threshold if available (CJ list may not include it; keep placeholder)
-        const withOrders = products.map((p: any) => ({
-          ...p,
-          monthlyOrders: typeof p.monthlyOrders === 'number' ? p.monthlyOrders : undefined
-        }));
-        const preFiltered = withOrders; // don't drop items to ensure >=20 in UI
-        console.log(`✅ Loaded ${products.length} products from CJDropshipping`);
-        
-        // Immediately enhance titles locally for better default titles
-        const locallyEnhanced = localTitleEnhancer.enhanceProductsBatch(preFiltered);
-        setAllProducts(locallyEnhanced);
-        setFilteredProducts(locallyEnhanced);
-        computeWinningSelection(locallyEnhanced);
-        // Start lightweight enrichment for rating and price
-        enrichRatingsAndPrices(locallyEnhanced);
+      console.log(`🔍 Loading products from AliExpress with search: ${searchText}`);
 
-        // AI enhancement u pozadini privremeno isključeno radi stabilnosti
+      const resp = await fetch('http://localhost:3001/api/aliexpress/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ searchText, page: 1 })
+      });
+      const data = await resp.json();
+      const items = Array.isArray(data?.data?.items) ? data.data.items : [];
 
-        // Background enrichment disabled to prevent value changes
-        // enrichLoadedProducts(preFiltered);
-      } else {
-        console.log('⚠️ No products returned from API, retrying with different search...');
-        console.log('🔄 Trying general product search...');
-        try {
-          const fallbackProducts = await searchCJProducts({ searchText: 'clothes', page: 1, pageSize: 20 });
-          if (fallbackProducts.length > 0) {
-            console.log(`✅ Fallback search successful: ${fallbackProducts.length} products`);
-            const preFiltered = fallbackProducts;
-            setAllProducts(preFiltered);
-            setFilteredProducts(preFiltered);
-            computeWinningSelection(preFiltered);
-            // Run enrichment
-            enrichRatingsAndPrices(preFiltered);
-            // enrichLoadedProducts(preFiltered); // Disabled to prevent value changes
-          } else {
-            console.log('❌ Still no products found, keeping empty state');
-            setAllProducts([]);
-            setFilteredProducts([]);
-          }
-        } catch (fallbackError) {
-          console.error('❌ Fallback search also failed:', fallbackError);
-          setAllProducts([]);
-          setFilteredProducts([]);
-        }
-      }
+      const mapped = items.map((it: any, idx: number) => {
+        const title = String(it.title || it.product_title || it.subject || 'Unknown Product');
+        const image = String(it.image || it.product_main_image_url || it.thumb_url || '');
+        const price = Number(it.target_sale_price || it.sale_price || it.price || 0);
+        const original = Number(it.original_price || it.sale_price_max || price * 1.15 || 0);
+        const orders = Number(it.orders || it.app_sale_volume || 0);
+        const rating = Number(it.evaluate_rate || it.ratings || 0);
+        const url = String(it.product_url || it.detail_url || '');
+        const id = url || `${title}-${idx}`;
+        const costPrice = Number((price * 0.45).toFixed(2));
+        const profitAmount = Number((price - costPrice).toFixed(2));
+        const profitMargin = price > 0 ? Math.round((profitAmount / price) * 100) : 0;
+        return {
+          id,
+          title,
+          price: Number(price.toFixed?.(2) ?? price),
+          originalPrice: Number(original.toFixed?.(2) ?? original),
+          sellPrice: costPrice,
+          rating: isFinite(rating) ? rating : 0,
+          reviewCount: 0,
+          deliveryTime: '7-15 days',
+          deliveryDays: 10,
+          supplier: 'AliExpress',
+          supplierLocation: 'CN',
+          category: 'General',
+          imageUrl: image,
+          profitMargin,
+          competitionLevel: 'Medium' as const,
+          trendingScore: Math.min(100, Math.round(Math.min(1, (orders || 0) / 1000) * 70 + Math.min(1, (rating || 0) / 5) * 30)),
+          stockAvailable: 100,
+          tags: [],
+          monthlyOrders: orders,
+          costPrice,
+          profitAmount,
+        } as Product;
+      });
+
+      setAllProducts(mapped);
+      setFilteredProducts(mapped);
+      computeWinningSelection(mapped);
     } catch (error) {
       console.error('❌ API failed:', error);
       console.log('🚫 API failure - showing empty state (NO MOCK DATA)');
       setAllProducts([]);
       setFilteredProducts([]);
-      
-      if (error instanceof Error && error.message.includes('Rate limit')) {
-        console.warn('🚫 Rate limit reached - please wait for API to be available');
-      } else {
-        console.warn('❌ CJDropshipping API failed - check API server status');
-      }
+      console.warn('❌ AliExpress API failed - check API server status');
     } finally {
       setIsLoadingProducts(false);
     }
@@ -978,6 +932,33 @@ function AppContent() {
               <a href="/privacy" className="hover:text-white">Privacy</a>
               <a href="/terms" className="hover:text-white">Terms</a>
               <a href="#" className="hover:text-white">Support</a>
+            </div>
+          </div>
+        </footer>
+        <AIChatbotWidget />
+        <Toaster position="top-right" />
+      </div>
+    );
+  }
+
+  if (routePath === '/refunds') {
+    return (
+      <div className="min-h-screen bg-black flex flex-col">
+        <PublicNav onAffiliateClick={() => navigate('/affiliate')} />
+        <main className="flex-1 p-6 lg:p-8 relative">
+          <RefundPolicy />
+        </main>
+        <footer className="mt-auto border-t border-gray-800/50 bg-gradient-to-r from-gray-900/80 to-gray-800/80 backdrop-blur-sm">
+          <div className="max-w-7xl mx-auto px-4 lg:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <img src={Logo} alt="Logo" className="w-12 h-12 rounded-xl shadow-lg shadow-purple-500/20" />
+              <div className="text-sm text-gray-400">© {new Date().getFullYear()} AutoDrops. All rights reserved.</div>
+            </div>
+            <div className="flex items-center gap-4 text-xs text-gray-400">
+              <a href="/" className="hover:text-white">Home</a>
+              <a href="/privacy" className="hover:text-white">Privacy</a>
+              <a href="/terms" className="hover:text-white">Terms</a>
+              <a href="/refunds" className="hover:text-white">Refunds</a>
             </div>
           </div>
         </footer>

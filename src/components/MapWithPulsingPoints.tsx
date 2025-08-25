@@ -24,7 +24,7 @@ function pctToNum(p: string): number {
 
 export function MapWithPulsingPoints({ mapSrc = '/map.svg', points = defaultPoints }: MapWithPulsingPointsProps) {
   return (
-    <div className="relative w-full max-w-6xl mx-auto select-none">
+    <div className="relative w-full max-w-6xl mx-auto select-none overflow-hidden rounded-2xl">
       <img src={mapSrc} alt="World map" className="w-full h-auto select-none pointer-events-none" />
       {points.map((p, idx) => {
         const topNum = pctToNum(p.top);

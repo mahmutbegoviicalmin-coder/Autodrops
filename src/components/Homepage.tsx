@@ -23,7 +23,9 @@ import {
   Crown,
   Rocket,
   Brain,
-  Award
+  Award,
+  Menu,
+  X
 } from 'lucide-react';
 import { GlobalSalesPulse } from './GlobalSalesPulse';
 import Logo from '../assets/logos/AD_logo.png';
@@ -130,6 +132,7 @@ export function Homepage({ onGetStarted, onViewProducts, onViewAffiliate, connec
 
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isYearly, setIsYearly] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleScrollToPricing = () => {
     const el = document.getElementById('pricing-title');
@@ -194,9 +197,11 @@ export function Homepage({ onGetStarted, onViewProducts, onViewAffiliate, connec
       {/* Navigation */}
       <nav className="relative flex items-center justify-between px-6 py-4 border-b border-gray-800/50 backdrop-blur-sm">
         <div className="flex items-center space-x-3">
-          <img src={Logo} alt="Logo" className="w-14 h-14 rounded-xl transform hover:scale-110 transition-transform duration-300 shadow-lg shadow-purple-500/25" />
+          <img src={Logo} alt="Logo" className="w-14 h-14 md:w-16 md:h-16 rounded-xl transform hover:scale-110 transition-transform duration-300 shadow-lg shadow-purple-500/25" />
         </div>
-        <div className="flex items-center space-x-6">
+        <div className="flex items-center space-x-3 md:space-x-6">
+          {/* Desktop links */}
+          <div className="hidden md:flex items-center space-x-6">
           <button 
             onClick={onViewAffiliate}
             className="text-gray-300 hover:text-white transition-all duration-300 hover:scale-105 font-medium"
@@ -209,22 +214,51 @@ export function Homepage({ onGetStarted, onViewProducts, onViewAffiliate, connec
           <button className="text-gray-300 hover:text-white transition-all duration-300 hover:scale-105 font-medium">
             Community
           </button>
-          <div className="flex items-center space-x-3">
-            <button 
-              onClick={() => onOpenAuth?.('login')}
-              className="text-gray-300 hover:text-white transition-all duration-300 hover:scale-105 font-medium px-4 py-2 rounded-lg border border-gray-600 hover:border-gray-400"
-            >
-              Sign In
-            </button>
+          </div>
+          {/* Auth CTA only: Get Started */}
+          <div className="flex items-center">
             <button 
               onClick={() => onOpenAuth?.('register')}
-              className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 md:px-6 md:py-2.5 rounded-xl font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-sm md:text-base"
             >
-              Sign Up Free
+              Get Started
+            </button>
+          </div>
+          {/* Burger */}
+            <button 
+            className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-700 text-gray-200 hover:text-white hover:border-gray-500 transition-colors"
+            aria-label="Open menu"
+            onClick={() => setIsMobileMenuOpen(v => !v)}
+            >
+            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+        </div>
+      </nav>
+
+      {/* Mobile dropdown */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden px-6 py-3 border-b border-gray-800/50 bg-black/70 backdrop-blur-sm">
+          <div className="flex flex-col gap-2">
+            <button 
+              onClick={() => { onViewAffiliate?.(); setIsMobileMenuOpen(false); }}
+              className="w-full text-left text-gray-300 hover:text-white px-2 py-2 rounded-lg hover:bg-gray-800/60"
+            >
+              Become an Affiliate
+            </button>
+            <button 
+              onClick={() => { handleScrollToPricing(); setIsMobileMenuOpen(false); }}
+              className="w-full text-left text-gray-300 hover:text-white px-2 py-2 rounded-lg hover:bg-gray-800/60"
+            >
+              Pricing
+            </button>
+            <button 
+              className="w-full text-left text-gray-300 hover:text-white px-2 py-2 rounded-lg hover:bg-gray-800/60"
+            >
+              Community
             </button>
           </div>
         </div>
-      </nav>
+      )}
 
       {/* Hero Section */}
       <div className="relative max-w-7xl mx-auto px-6 pt-20 pb-32 text-center">
@@ -323,17 +357,15 @@ export function Homepage({ onGetStarted, onViewProducts, onViewAffiliate, connec
             <Rocket className="w-5 h-5 text-blue-400 animate-bounce" />
           </div>
           
-          <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight">
+          <h1 className="text-4xl md:text-8xl font-bold mb-8 leading-tight">
             <span className="inline-block animate-slide-in-left">Create products that</span>
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 animate-slide-in-right bg-300% animate-gradient">
               sell like crazy
             </span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed animate-fade-in delay-300">
-            Know what will sell before you list a product. Track trends, analyze competitors, 
-            A/B test everything, find outlier products, and see what images are popular in your niche—all 
-            powered by real-time CJDropshipping data and AI insights.
+          <p className="text-base md:text-xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed animate-fade-in delay-300">
+            Know what will sell before you list a product. Track trends, analyze competitors, A/B test everything, find outlier products, and see what images are popular in your niche
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-5 mb-12 animate-fade-in delay-500">
@@ -429,11 +461,11 @@ export function Homepage({ onGetStarted, onViewProducts, onViewAffiliate, connec
 
       {/* Floating Stats */}
       <div className="relative max-w-7xl mx-auto px-6 -mt-16 mb-20">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             { 
               label: "Products Analyzed", 
-              value: animatedNumbers.products.toLocaleString() + "+", 
+              value: "+2,5M", 
               icon: <ShoppingBag className="w-6 h-6" />,
               color: "purple"
             },
@@ -448,12 +480,6 @@ export function Homepage({ onGetStarted, onViewProducts, onViewAffiliate, connec
               value: animatedNumbers.profit + "%", 
               icon: <TrendingUp className="w-6 h-6" />,
               color: "green"
-            },
-            { 
-              label: "Active Users", 
-              value: animatedNumbers.users.toLocaleString() + "+", 
-              icon: <Users className="w-6 h-6" />,
-              color: "yellow"
             }
           ].map((stat, index) => (
             <div 
@@ -486,7 +512,7 @@ export function Homepage({ onGetStarted, onViewProducts, onViewAffiliate, connec
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
           {[
             {
               icon: <Target className="w-10 h-10 text-purple-400" />,
@@ -505,28 +531,12 @@ export function Homepage({ onGetStarted, onViewProducts, onViewAffiliate, connec
               delay: "100ms"
             },
             {
-              icon: <Eye className="w-10 h-10 text-green-400" />,
-              title: "Analyze Top-Performing Images",
-              description: "Find what image styles get clicks in your niche in minutes, not hours.",
-              gradient: "from-green-500/10 to-green-600/10",
-              border: "border-green-500/20",
-              delay: "200ms"
-            },
-            {
               icon: <Users className="w-10 h-10 text-yellow-400" />,
               title: "Keep up with Competitors",
               description: "Track what's working for other sellers in your niche with real-time monitoring.",
               gradient: "from-yellow-500/10 to-yellow-600/10",
               border: "border-yellow-500/20",
               delay: "300ms"
-            },
-            {
-              icon: <Sparkles className="w-10 h-10 text-pink-400" />,
-              title: "Never miss a trend with Alerts",
-              description: "Be the first to know when trends emerge in your niche with AI-powered notifications.",
-              gradient: "from-pink-500/10 to-pink-600/10",
-              border: "border-pink-500/20",
-              delay: "400ms"
             },
             {
               icon: <Brain className="w-10 h-10 text-indigo-400" />,
@@ -640,7 +650,7 @@ export function Homepage({ onGetStarted, onViewProducts, onViewAffiliate, connec
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400"> successful dropshippers</span>
             </h2>
             
-            <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base md:text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
               Join our members-only Discord where entrepreneurs share what's actually working in dropshipping. 
               Plus, Pro Members get access to a dedicated server where you can get real-time feedback, insights, 
               and direct access to our team.
@@ -863,31 +873,24 @@ export function Homepage({ onGetStarted, onViewProducts, onViewAffiliate, connec
       {/* Final CTA */}
       <div className="max-w-7xl mx-auto px-6 py-20 text-center">
         <div className="bg-gradient-to-r from-purple-600/10 to-blue-600/10 border border-purple-500/20 rounded-3xl p-16 backdrop-blur-sm animate-fade-in">
-          <h2 className="text-5xl md:text-6xl font-bold mb-8">
+          <h2 className="text-4xl md:text-6xl font-bold mb-8">
             Start creating 
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400"> viral products </span>
             today
           </h2>
-          <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base md:text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
             Know what works before you list a product. Track trends, analyze competitors, 
-            and create images that convert—all backed by real-time CJDropshipping data and AI insights.
+            and create images that convert—all backed by real-time AliExpress data and AI insights.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <button
               onClick={onGetStarted}
-              className="group bg-gradient-to-r from-purple-600 to-blue-600 text-white px-12 py-5 rounded-xl font-semibold text-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl flex items-center space-x-3"
+              className="group bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 md:px-12 md:py-5 rounded-xl font-semibold text-base md:text-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl flex items-center space-x-3"
             >
               <Rocket className="w-6 h-6 animate-bounce" />
               <span>Get Started Free</span>
               <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
-            </button>
-            <button
-              onClick={onViewProducts}
-              className="group px-12 py-5 border-2 border-purple-400 text-purple-400 font-semibold rounded-xl hover:bg-purple-400 hover:text-white transition-all duration-300 text-xl transform hover:scale-105 flex items-center space-x-2"
-            >
-              <Eye className="w-6 h-6" />
-              <span>View Demo</span>
             </button>
           </div>
         </div>
@@ -896,32 +899,17 @@ export function Homepage({ onGetStarted, onViewProducts, onViewAffiliate, connec
       {/* Footer */}
       <footer className="border-t border-gray-800/50 py-16 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-8 mb-12">
-            <div className="animate-fade-in">
-              <div className="flex items-center space-x-3 mb-6">
+          <div className="mb-12">
+            <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
+              <div className="flex items-center space-x-3">
                 <img src={Logo} alt="Logo" className="w-14 h-14 rounded-xl" />
               </div>
-              <p className="text-gray-400 leading-relaxed">
-                The most powerful dropshipping platform for fashion entrepreneurs. 
-                Powered by AI and real-time data.
-              </p>
-            </div>
-            
-            <div className="animate-fade-in delay-100">
-              <h3 className="font-semibold mb-6 text-lg">🔥 Top Categories</h3>
-              <ul className="space-y-3 text-gray-400">
-                <li className="hover:text-white transition-colors cursor-pointer">Top Sellers</li>
-                <li className="hover:text-white transition-colors cursor-pointer">Trending Products</li>
-                <li className="hover:text-white transition-colors cursor-pointer">High Margin Items</li>
-              </ul>
-            </div>
-            
-            <div className="animate-fade-in delay-200">
-              <h3 className="font-semibold mb-6 text-lg">Get to know us</h3>
-              <ul className="space-y-3 text-gray-400">
+              <div className="animate-fade-in w-full md:w-auto">
+                <div className="flex flex-col md:flex-row md:items-center md:gap-6">
+                  <h3 className="font-semibold mb-3 md:mb-0 text-lg">Get to know us</h3>
+                  <ul className="flex flex-wrap gap-x-6 gap-y-2 text-gray-400">
                 <li className="hover:text-white transition-colors cursor-pointer">Help Center</li>
-                <li className="hover:text-white transition-colors cursor-pointer">FAQ</li>
-                <li className="hover:text-white transition-colors cursor-pointer">Community</li>
+                    
                 <li className="hover:text-white transition-colors cursor-pointer">
                   <a href="/privacy" className="hover:text-white transition-colors">
                     Privacy Policy
@@ -932,21 +920,19 @@ export function Homepage({ onGetStarted, onViewProducts, onViewAffiliate, connec
                     Terms of Use
                   </a>
                 </li>
+                    <li className="hover:text-white transition-colors cursor-pointer">
+                      <a href="/refunds" className="hover:text-white transition-colors">
+                        Refund Policy
+                      </a>
+                    </li>
               </ul>
             </div>
-            
-            <div className="animate-fade-in delay-300">
-              <h3 className="font-semibold mb-6 text-lg">Product</h3>
-              <ul className="space-y-3 text-gray-400">
-                <li className="hover:text-white transition-colors cursor-pointer">Chrome Extension</li>
-                <li className="hover:text-white transition-colors cursor-pointer">API Access</li>
-                <li className="hover:text-white transition-colors cursor-pointer">Mobile App</li>
-              </ul>
+              </div>
             </div>
           </div>
           
           <div className="border-t border-gray-800/50 pt-8 text-center text-gray-400">
-            <p>Copyright © AutoDrops 2025. Built with ❤️ for entrepreneurs.</p>
+            <p>© {new Date().getFullYear()} AutoDrops. All rights reserved.</p>
           </div>
         </div>
       </footer>

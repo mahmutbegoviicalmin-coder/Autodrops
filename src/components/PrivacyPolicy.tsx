@@ -9,12 +9,12 @@ export function PrivacyPolicy() {
       </div>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-10">
         <div className="bg-gray-900/60 border border-gray-700/60 rounded-2xl p-6 lg:p-10 card-gradient relative overflow-hidden">
-          <div className="absolute right-4 top-4">
+          <div className="absolute right-4 top-2 md:top-4">
             <span className="text-xs uppercase tracking-wider px-3 py-1 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-purple-500/25 animate-pulse">
               Last Updated: August 2025
             </span>
           </div>
-          <h1 className="text-3xl lg:text-4xl font-bold text-white mb-3 text-center">
+          <h1 className="text-3xl lg:text-4xl font-bold text-white mb-3 text-center mt-10 md:mt-0">
             Privacy Policy – AutoDrops (autodrops.io)
           </h1>
 

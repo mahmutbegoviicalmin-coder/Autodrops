@@ -103,3 +103,4 @@ temp/
 # Secrets and local config
 .cj-tokens.json
 cj-config.env
+.vercel

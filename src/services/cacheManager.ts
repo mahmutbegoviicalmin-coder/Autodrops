@@ -24,7 +24,7 @@ export class CacheManager {
   };
 
   private readonly CACHE_VERSION = '1.0.0';
-  private readonly STORAGE_PREFIX = 'cjdropshipping_cache_';
+  private readonly STORAGE_PREFIX = 'autodrops_cache_';
 
   constructor(config?: Partial<CacheConfig>) {
     if (config) {

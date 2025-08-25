@@ -333,7 +333,7 @@ export function NewFilterSidebar({
                       <option value="baby">👶 Baby & Kids</option>
                     </optgroup>
                     {categories.length > 0 && (
-                      <optgroup label="📂 CJ Categories">
+                      <optgroup label="📂 Categories">
                         {categories.map((category) => (
                           <option key={category.id} value={category.name}>{category.name}</option>
                         ))}

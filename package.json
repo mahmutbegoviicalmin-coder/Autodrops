@@ -13,12 +13,13 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "proxy:cj": "node api-server.cjs",
-    "dev:full:cj": "concurrently \"npm run proxy:cj\" \"npm run dev\"",
+    "api": "node api-server.cjs",
+    "dev:full:api": "concurrently \"npm run api\" \"npm run dev\"",
     "agent:winners": "node scripts/winning-agent.cjs"
   },
   "dependencies": {
     "axios": "^1.11.0",
+    "cheerio": "^1.1.2",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
     "esbuild": "^0.25.9",
@@ -26,6 +27,7 @@
     "firebase": "^12.1.0",
     "lucide-react": "^0.263.1",
     "node-fetch": "^2.7.0",
+    "puppeteer": "^24.17.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.5.2"
