@@ -669,9 +669,10 @@ export function Homepage({ onGetStarted, onViewProducts, onViewAffiliate, connec
               ))}
             </div>
             
-            <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 md:px-8 md:py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center space-x-2 mx-auto text-sm md:text-base">
-              <DiscordLogo size={16} color="#FFFFFF" />
-              <span className="whitespace-nowrap">Join Discord Community</span>
+            <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 md:px-8 md:py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center space-x-2 mx-auto text-xs md:text-base">
+              <DiscordLogo size={14} color="#FFFFFF" />
+              <span className="whitespace-nowrap hidden sm:inline">Join Discord Community</span>
+              <span className="whitespace-nowrap sm:hidden">Join Discord</span>
               <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
             </button>
           </div>
