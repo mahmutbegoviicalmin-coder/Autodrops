@@ -654,21 +654,17 @@ export function Homepage({ onGetStarted, onViewProducts, onViewAffiliate, connec
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400"> successful dropshippers</span>
             </h2>
             
-            <p className="text-base md:text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Join our members-only Discord where entrepreneurs share what's actually working in dropshipping. 
-              Plus, Pro Members get access to a dedicated server where you can get real-time feedback, insights, 
-              and direct access to our team.
-            </p>
+            {/* Description removed per request for a cleaner mobile view */}
             
             <div className="grid md:grid-cols-3 gap-6 mb-8">
               {[
-                { icon: <Rocket className="w-6 h-6" />, text: "Early Product Announcements" },
-                { icon: <Users className="w-6 h-6" />, text: "Exclusive Workshops" },
-                { icon: <Crown className="w-6 h-6" />, text: "Priority Support" }
+                { icon: <Rocket className="w-5 h-5 md:w-6 md:h-6" />, text: "Early Product Announcements" },
+                { icon: <Users className="w-5 h-5 md:w-6 md:h-6" />, text: "Exclusive Workshops" },
+                { icon: <Crown className="w-5 h-5 md:w-6 md:h-6" />, text: "Priority Support" }
               ].map((item, index) => (
                 <div key={index} className="flex items-center space-x-3 text-gray-300 animate-slide-in-up" style={{ animationDelay: `${index * 100}ms` }}>
                   <div className="text-indigo-400">{item.icon}</div>
-                  <span>{item.text}</span>
+                  <span className={`${index === 0 ? 'text-sm md:text-base whitespace-nowrap' : ''}`}>{item.text}</span>
                 </div>
               ))}
             </div>
